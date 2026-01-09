@@ -1,0 +1,54 @@
+:root {
+  /* Colors */
+  --primary-dark: #11162c;
+  --secondary-dark: #2e2f3e;
+  --accent-blue: #091447;
+  --white: #ffffff;
+
+  --bg-gradient: linear-gradient(135deg, #11162c 0%, #091447 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  color: var(--primary-dark);
+}
+
+.input-underlined {
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 0 !important;
+  color: white !important;
+  padding-left: 0 !important;
+}
+
+.input-underlined:focus {
+  box-shadow: none !important;
+  border-bottom: 2px solid #ffffff !important;
+}
+
+.input-underlined::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+/* Warna orange tombol sesuai gambar */
+.btn-orange {
+  background-color: #ff8400;
+  color: white;
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 10px 40px;
+}
+
+.btn-orange:hover {
+  background-color: #e67700;
+  color: white;
+}
