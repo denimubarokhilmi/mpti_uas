@@ -115,11 +115,23 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { callAPI } from "@/store/helper.js";
+
 import {
   sweet_alert_response_error,
   sweet_alert_response_success,
 } from "@/store/helper.js";
-// Data simulasi profil (bisa dikirim via props jika data dinamis)
+
+const routes_props = defineProps({
+  changes_route: {
+    type: String,
+    required: true,
+  },
+  profile_route: {
+    type: String,
+    required: true,
+  },
+});
+
 const profileData = ref({
   name: "",
   NIM: "",
@@ -135,7 +147,11 @@ const profileData = ref({
 
 const change_profile = async () => {
   try {
-    const res = await callAPI("/admin/profile", profileData.value, "PUT");
+    const res = await callAPI(
+      routes_props.changes_route,
+      profileData.value,
+      "PUT"
+    );
     sweet_alert_response_success(res.result.message);
     await binding_data();
     return;
@@ -148,10 +164,10 @@ const change_profile = async () => {
 
 const binding_data = async () => {
   try {
-    const result = await callAPI("/admin", "", "GET");
+    const result = await callAPI(routes_props.profile_route, "", "GET");
     const {
       name,
-      NIM,
+      nim,
       place,
       date,
       gender,
@@ -161,7 +177,7 @@ const binding_data = async () => {
       address,
     } = result.result;
     profileData.value.name = name;
-    profileData.value.NIM = NIM;
+    profileData.value.NIM = nim;
     profileData.value.place = place;
     profileData.value.date = date;
     profileData.value.gender =

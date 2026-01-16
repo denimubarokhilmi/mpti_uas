@@ -80,6 +80,14 @@ import {
   sweet_alert_response_error,
   sweet_alert_response_success,
 } from "@/store/helper.js";
+
+const routes_props = defineProps({
+  changes_route: {
+    type: String,
+    required: true,
+  },
+});
+
 const passwordData = ref({
   old_pass: "",
   new_pass: "",
@@ -87,7 +95,11 @@ const passwordData = ref({
 
 const handleUpdatePassword = async () => {
   try {
-    const res = await callAPI("/admin/profile", passwordData.value, "PUT");
+    const res = await callAPI(
+      routes_props.changes_route,
+      passwordData.value,
+      "PUT"
+    );
     sweet_alert_response_success(res.result.message);
     passwordData.value.new_pass = "";
     passwordData.value.old_pass = "";

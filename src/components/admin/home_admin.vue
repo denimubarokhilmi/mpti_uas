@@ -4,7 +4,7 @@
       <div class="row mb-5">
         <div class="col-12">
           <h1 class="display-4 fw-bold text-primary-dark">
-            SELAMAT DATANG,<br />ADMINKUU
+            SELAMAT DATANG,<br />{{ current_name }}
           </h1>
           <hr class="w-25 border-dark border-2 opacity-100" />
         </div>
@@ -85,9 +85,11 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import home_admin_store from "@/store/home_admin_store";
+import role_store from "@/store/role_store.js";
+const role = role_store.use_role_page_store();
 
 const store_home_admin = home_admin_store.use_home();
 const { home_store } = storeToRefs(store_home_admin);
@@ -97,20 +99,18 @@ const count_room = reactive([]);
 const count_users = reactive([]);
 const count_officer = reactive([]);
 
-// Rentang tahun yang ditampilkan di sumbu X
 const xValues = [2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
-
-// Fungsi Helper untuk menghitung jumlah per tahun
+const current_name = ref("");
 const getCountPerYear = (dataArray, years) => {
   return years.map((year) => {
-    // Menghitung berapa banyak data yang date_of_entry-nya cocok dengan tahun tersebut
     return dataArray.filter((item) => item.date_of_entry == year).length;
   });
 };
 
 onMounted(async () => {
   try {
-    // 1. Ambil data dari API
+    await role.get_current_user("/admin", "", "GET");
+    current_name.value = role.role_page;
     await store_home_admin.get_home_store_inventory("/inventory", "", "GET");
     await store_home_admin.get_home_store_officer_and_user(
       "/users_and_officer",
@@ -118,21 +118,18 @@ onMounted(async () => {
       "GET"
     );
 
-    // 2. Isi state reactive dengan hasil API
     const result = home_store.value;
     count_facility.push(...result.inventory.result.facility);
     count_room.push(...result.inventory.result.room);
     count_users.push(...result.officer_and_user.result.user);
     count_officer.push(...result.officer_and_user.result.officer);
 
-    // 3. Proses data untuk grafik (Mahasiswa & Petugas dipisah)
     const userDataForChart = getCountPerYear(count_users, xValues);
     const officerDataForChart = getCountPerYear(count_officer, xValues);
     const totalDataForChart = xValues.map(
       (_, i) => userDataForChart[i] + officerDataForChart[i]
     );
 
-    // 4. Inisialisasi Chart
     const ctx = document.getElementById("myChart");
     new Chart(ctx, {
       type: "line",
@@ -141,7 +138,7 @@ onMounted(async () => {
         datasets: [
           {
             label: "Mahasiswa",
-            data: userDataForChart, // Data dinamis dari API User
+            data: userDataForChart,
             borderColor: "#11162C",
             backgroundColor: "#11162C",
             pointRadius: 4,
@@ -149,7 +146,7 @@ onMounted(async () => {
           },
           {
             label: "Petugas",
-            data: officerDataForChart, // Data dinamis dari API Officer
+            data: officerDataForChart,
             borderColor: "#FF8400",
             backgroundColor: "#FF8400",
             pointRadius: 4,
@@ -157,7 +154,7 @@ onMounted(async () => {
           },
           {
             label: "Total Pengguna",
-            data: totalDataForChart, // Gabungan keduanya per tahun
+            data: totalDataForChart,
             borderColor: "red",
             backgroundColor: "red",
             pointRadius: 4,
@@ -177,7 +174,7 @@ onMounted(async () => {
           y: {
             beginAtZero: true,
             ticks: {
-              stepSize: 1, // Karena data manusia (integer)
+              stepSize: 1,
             },
           },
         },

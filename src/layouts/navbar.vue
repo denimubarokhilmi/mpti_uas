@@ -82,8 +82,11 @@
     </div>
   </nav>
 
-  <comp_modal />
-  <comp_modal_setting />
+  <comp_modal
+    :changes_route="props_navbar.changes_routess"
+    :profile_route="props_navbar.profile_routess"
+  />
+  <comp_modal_setting :changes_route="props_navbar.changes_routess" />
 </template>
 
 <script setup>
@@ -100,6 +103,14 @@ const props_navbar = defineProps({
   },
   sub_menu: {
     type: Array,
+    required: true,
+  },
+  changes_routess: {
+    type: String,
+    required: true,
+  },
+  profile_routess: {
+    type: String,
     required: true,
   },
 });
