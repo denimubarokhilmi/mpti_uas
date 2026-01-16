@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import welcome from "@/layouts/welcome.vue";
 import login from "@/layouts/login.vue";
+import admin_page from "@/page/admin_page.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -19,20 +20,33 @@ const router = createRouter({
       component: login,
       meta: { title: "Login", hideLayout: true },
     },
+    {
+      path: "/admin_page",
+      name: "admin",
+      component: admin_page,
+      meta: { title: "Admin", requiresAuth: true },
+    },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    }
+
+    return { top: 0 };
+  },
 });
 
 router.beforeEach((to, from, next) => {
-  // const token = document.cookie;
+  const token = document.cookie;
   // currentPage.value = to.name;
   document.title = to.meta.title;
 
-  // if (to.meta.requiresAuth && token.length == 0) {
-  //     return next("/admin/login");
-  // }
+  if (to.meta.requiresAuth && token.length == 0) {
+    return next("/login");
+  }
 
-  // if (to.path === "/admin/login" && token != 0) {
-  //     return next("/admin/dashboard");
+  // if (token != 0) {
+  //   return next("/");
   // }
 
   next();

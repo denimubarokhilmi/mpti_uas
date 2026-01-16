@@ -6,17 +6,23 @@ const callAPI = async (path, payload, methods) => {
     const token = document.cookie;
     const splitsToken = token.split("=")[1];
     const url = APIURL;
+    const isFormData = payload instanceof FormData;
 
     const options = {
       method: methods,
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json",
         Authorization: `Bearer ${splitsToken}`,
       },
-      body: JSON.stringify(payload),
+      body: isFormData ? payload : JSON.stringify(payload),
     };
 
+    if (!isFormData) {
+      options.headers["Content-Type"] = "application/json";
+    }
+    if (payload.length === 0) {
+      delete options.body;
+    }
     // showLoading();
     const res = await fetch(`${url}${path}`, options);
 
@@ -24,28 +30,29 @@ const callAPI = async (path, payload, methods) => {
     if (!res.ok) throw res;
     return res.json();
   } catch (error) {
-    throw await error.json();
+    // throw await error.json();
+    throw error;
   }
-  //   finally {
-  //     // hideLoading();
-  //   }
+  // finally {
+  //   hideLoading();
+  // }
 };
 
-const response_success = (message) => {
+const sweet_alert_response_success = (message) => {
   window.Swal.fire({
+    title: "Success!",
+    text: `${message}`,
     icon: "success",
-    title: "Success",
-    text: message,
     confirmButtonText: "Oke",
   });
 };
 
-const response_error = (message) => {
+const sweet_alert_response_error = (message) => {
   window.Swal.fire({
+    title: "Opps!",
+    text: `${message}`,
     icon: "error",
-    title: "Oppss...",
-    text: message,
     confirmButtonText: "Oke",
   });
 };
-export { callAPI, response_success, response_error };
+export { callAPI, sweet_alert_response_error, sweet_alert_response_success };
