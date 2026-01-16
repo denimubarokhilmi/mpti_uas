@@ -1,5 +1,11 @@
 <template>
-  <navbar v-if="!$route.meta.hideLayout" :menu="menus" :sub_menu="sub_menus" />
+  <navbar
+    v-if="!$route.meta.hideLayout"
+    :menu="menus"
+    :sub_menu="sub_menus"
+    :changes_routess="change_router"
+    :profile_routess="profile_router"
+  />
 
   <component :is="activeComponent" />
 </template>
@@ -14,6 +20,8 @@ import manage_user from "@/components/admin/manage_user.vue";
 
 const activeComponent = shallowRef(home_admin);
 
+const change_router = "/admin/profile";
+const profile_router = "/admin";
 const store_component = component_store.use_component();
 store_component.is_component = home_admin;
 

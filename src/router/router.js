@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import welcome from "@/layouts/welcome.vue";
 import login from "@/layouts/login.vue";
 import admin_page from "@/page/admin_page.vue";
+import user_page from "@/page/user_page.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -25,6 +26,12 @@ const router = createRouter({
       name: "admin",
       component: admin_page,
       meta: { title: "Admin", requiresAuth: true },
+    },
+    {
+      path: "/mahasiswa_page",
+      name: "mhasiswa",
+      component: user_page,
+      meta: { title: "Mahasiswa", requiresAuth: true },
     },
   ],
   scrollBehavior(to, from, savedPosition) {

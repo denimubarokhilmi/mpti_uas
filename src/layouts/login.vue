@@ -51,6 +51,9 @@
 import { ref } from "vue";
 import { APIURL } from "@/main.js";
 import { useRouter } from "vue-router";
+import role_store from "@/store/role_store.js";
+const role = role_store.use_role_page_store();
+
 import {
   sweet_alert_response_error,
   sweet_alert_response_success,
@@ -91,7 +94,7 @@ const handleLogin = async () => {
     }
     if (data.result.role === "user") {
       setTimeout(() => {
-        router.push("/user_page");
+        router.push("/mahasiswa_page");
       }, 1500);
       return;
     }
