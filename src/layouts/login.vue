@@ -49,15 +49,60 @@
 
 <script setup>
 import { ref } from "vue";
+import { APIURL } from "@/main.js";
+import { useRouter } from "vue-router";
+import {
+  sweet_alert_response_error,
+  sweet_alert_response_success,
+} from "@/store/helper";
 
 const form = ref({
   username: "",
   password: "",
 });
 
-const handleLogin = () => {
-  console.log("Logging in with:", form.value);
-  // Integrasikan dengan Pinia store Anda di sini
+const router = useRouter();
+const handleLogin = async () => {
+  try {
+    const res = await fetch(`${APIURL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: form.value.username,
+        password: form.value.password,
+      }),
+    });
+    if (!res.ok) {
+      throw res;
+    }
+    const data = await res.json();
+    document.cookie = `Bearer=${
+      data.result.token
+    }; path=/; max-age=${7200}; SameSite=Strict`;
+    sweet_alert_response_success(data.result.message);
+
+    if (data.result.role === "admin") {
+      setTimeout(() => {
+        router.push("/admin_page");
+      }, 1500);
+      return;
+    }
+    if (data.result.role === "user") {
+      setTimeout(() => {
+        router.push("/user_page");
+      }, 1500);
+      return;
+    }
+    setTimeout(() => {
+      router.push("/officer_page");
+    }, 1500);
+    return;
+  } catch (error) {
+    const err = await error.json();
+    sweet_alert_response_error(err.error);
+  }
 };
 </script>
 

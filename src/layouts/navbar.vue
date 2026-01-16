@@ -23,32 +23,26 @@
         id="navbarNav"
       >
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
-          <li class="nav-item">
-            <router-link to="/" class="nav-link" @click="closeMenu"
-              >HOME</router-link
+          <li
+            class="nav-item"
+            v-for="(item, index) in props_navbar.menu"
+            :key="index"
+          >
+            <button
+              type="button"
+              class="nav-link"
+              :class="{ active: isActive(item.component) }"
+              @click="closeMenu(item.component)"
             >
-          </li>
-          <li class="nav-item">
-            <router-link to="/kalender" class="nav-link" @click="closeMenu"
-              >KALENDER</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link to="/peminjaman" class="nav-link" @click="closeMenu"
-              >PEMINJAMAN</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link to="/riwayat" class="nav-link" @click="closeMenu"
-              >RIWAYAT</router-link
-            >
+              {{ item.name }}
+            </button>
           </li>
         </ul>
 
         <div class="d-flex justify-content-center">
           <div class="dropdown">
             <a
-              class="nav-link dropdown-toggle d-flex align-items-center text-white"
+              class="nav-link dropdown-toggle d-flex align-items-center text-white cursor-pointer"
               href="#"
               role="button"
               data-bs-toggle="dropdown"
@@ -57,25 +51,28 @@
               <i class="bi bi-person-circle fs-4 me-2"></i>
               <span class="d-lg-none">PROFILE MENU</span>
             </a>
+
             <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-              <li>
-                <a class="dropdown-item py-2" href="#" @click="closeMenu">
-                  <i class="bi bi-person-gear me-2"></i>Manage Profile
-                </a>
+              <li v-for="(item, index) in props_navbar.sub_menu" :key="index">
+                <template v-if="item.name">
+                  <button
+                    class="dropdown-item py-2 border-0 bg-transparent text-start"
+                    @click="handleProfileClick(item.modals)"
+                  >
+                    {{ item.name }}
+                  </button>
+                </template>
               </li>
-              <li>
-                <a class="dropdown-item py-2" href="#" @click="closeMenu">
-                  <i class="bi bi-gear me-2"></i>Settings
-                </a>
-              </li>
+
               <li><hr class="dropdown-divider" /></li>
-              <li>
+
+              <li class="dropdown-item py-2">
                 <a
-                  class="dropdown-item py-2 text-danger"
                   href="#"
-                  @click="closeMenu"
+                  @click.prevent="logOut"
+                  class="text-decoration-none text-dark"
                 >
-                  <i class="bi bi-box-arrow-right me-2"></i>Log Out
+                  <i class="bi bi-box-arrow-right me-2"></i> Keluar Akun
                 </a>
               </li>
             </ul>
@@ -84,29 +81,93 @@
       </div>
     </div>
   </nav>
+
+  <comp_modal />
+  <comp_modal_setting />
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import component_store from "@/store/component_store.js";
+import comp_modal from "./modals_comp/comp_modal_profile.vue";
+import comp_modal_setting from "./modals_comp/comp_modal_setting.vue";
+const store_component = component_store.use_component();
 
-// State untuk mengontrol ikon hamburger
+const props_navbar = defineProps({
+  menu: {
+    type: Array,
+    required: true,
+  },
+  sub_menu: {
+    type: Array,
+    required: true,
+  },
+});
+
 const isMenuOpen = ref(false);
+let profileModalInstance = null;
+let settingModalInstance = null;
+
+// Inisialisasi modal saat komponen di-mount
+onMounted(() => {
+  const modalEl = document.getElementById("profileModal");
+  const settingModalEl = document.getElementById("changePasswordModal");
+  if (modalEl) {
+    profileModalInstance = new bootstrap.Modal(modalEl);
+  }
+  if (settingModalEl) {
+    settingModalInstance = new bootstrap.Modal(settingModalEl);
+  }
+});
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
-// Fungsi untuk menutup menu saat link diklik (terutama di mobile)
-const closeMenu = () => {
+// Fungsi ketika 'Kelola Profile' diklik
+const handleProfileClick = (items) => {
+  isMenuOpen.value = false; // Tutup menu mobile jika sedang terbuka
+  if (profileModalInstance && items === "profile") {
+    profileModalInstance.show(); // Munculkan modal
+  } else if (settingModalInstance && items === "setting") {
+    settingModalInstance.show(); // Munculkan modal pengaturan
+  }
+};
+
+const closeMenu = (component) => {
+  if (component) {
+    store_component.change_component(component);
+  }
   isMenuOpen.value = false;
+};
+
+const isActive = (component) => {
+  return store_component.is_component === component;
+};
+
+const logOut = () => {
+  window.Swal.fire({
+    title: "Do you want to logout?",
+    showCancelButton: true,
+    confirmButtonText: "Yes",
+    confirmButtonColor: "#ff8400",
+    cancelButtonColor: "#d33",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.Swal.fire("Logout successfully!", "", "success");
+      setTimeout(() => {
+        document.cookie = "Bearer=; path=/; max-age=0; SameSite=Strict";
+        window.location.href = "/login";
+      }, 1500);
+    }
+  });
 };
 </script>
 
 <style scoped>
 .custom-navbar {
-  background-color: var(--primary-dark); /* Mengambil dari root style.css */
+  background-color: #11162c;
   padding: 1rem 0;
-  transition: all 0.3s ease;
 }
 
 .nav-link {
@@ -117,31 +178,44 @@ const closeMenu = () => {
   transition: color 0.3s ease;
 }
 
-.nav-link:hover,
-.router-link-active {
-  color: #ff8400 !important; /* Warna orange yang kita pakai sebelumnya */
+.cursor-pointer {
+  cursor: pointer;
 }
 
-/* Styling Dropdown agar lebih modern */
+.nav-link.active {
+  color: #ff8400 !important;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  color: #ff8400 !important;
+}
+
 .dropdown-menu {
   border-radius: 12px;
   margin-top: 15px;
   min-width: 200px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  transition: all 0.2s;
+  cursor: pointer;
 }
 
 .dropdown-item:hover {
   background-color: #f8f9fa;
-  color: var(--primary-dark);
+  color: #11162c;
 }
 
-/* Menghilangkan panah bawaan bootstrap jika diinginkan */
 .dropdown-toggle::after {
   display: none;
 }
 
 @media (max-width: 991.98px) {
   .navbar-collapse {
-    background-color: var(--primary-dark);
+    background-color: #11162c;
     padding: 20px;
     border-radius: 0 0 15px 15px;
   }
