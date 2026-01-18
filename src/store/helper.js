@@ -16,7 +16,6 @@ const callAPI = async (path, payload, methods) => {
       },
       body: isFormData ? payload : JSON.stringify(payload),
     };
-
     if (!isFormData) {
       options.headers["Content-Type"] = "application/json";
     }

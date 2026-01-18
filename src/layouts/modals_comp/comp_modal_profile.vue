@@ -150,7 +150,7 @@ const change_profile = async () => {
     const res = await callAPI(
       routes_props.changes_route,
       profileData.value,
-      "PUT"
+      "PUT",
     );
     sweet_alert_response_success(res.result.message);
     await binding_data();

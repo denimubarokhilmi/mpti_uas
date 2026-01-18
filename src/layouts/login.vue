@@ -98,6 +98,7 @@ const handleLogin = async () => {
       }, 1500);
       return;
     }
+    console.log(data.result);
     setTimeout(() => {
       router.push("/officer_page");
     }, 1500);

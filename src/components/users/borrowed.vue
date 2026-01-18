@@ -268,17 +268,18 @@ onMounted(async () => {
 });
 
 const reset = () => {
-  (formPinjam.alasan = ""),
+  ((formPinjam.alasan = ""),
     (formPinjam.end_date = ""),
     (formPinjam.end_time = ""),
     (formPinjam.items_id = ""),
     (formPinjam.quantity = 0),
     (formPinjam.start_date = ""),
-    (formPinjam.start_time = "");
+    (formPinjam.start_time = ""));
   return;
 };
 const submitPeminjaman = async () => {
   try {
+    Object.assign(formPinjam, data_currents.value);
     const res = await callAPI("/borrowed_items", formPinjam, "POST");
     sweet_alert_response_success(res.result.message);
     await binding_data();

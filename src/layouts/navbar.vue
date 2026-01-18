@@ -66,7 +66,7 @@
 
               <li><hr class="dropdown-divider" /></li>
 
-              <li class="dropdown-item py-2">
+              <li class="dropdown-item">
                 <a
                   href="#"
                   @click.prevent="logOut"
