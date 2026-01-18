@@ -42,7 +42,7 @@
         >
           <div class="image-wrapper me-3">
             <img
-              :src="item.image"
+              :src="`${path_image}${item.image}`"
               :alt="item.name"
               class="rounded-pill img-fluid shadow-sm"
             />
@@ -219,6 +219,7 @@ import {
   sweet_alert_response_error,
   sweet_alert_response_success,
 } from "@/store/helper.js";
+import { path_image } from "@/main.js";
 const role = role_store.use_role_page_store();
 const data_inventory = reactive({ facility: [], room: [] });
 const activeCategory = ref("facility");
