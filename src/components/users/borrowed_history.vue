@@ -59,10 +59,18 @@
               </td>
               <td class="align-middle">
                 <button
+                  v-if="data.item.status.approved || data.item.status.pending"
                   class="btn btn-danger rounded-pill px-4 btn-sm fw-bold"
                   @click="handleCancel(data)"
                 >
                   BATALKAN
+                </button>
+                <button
+                  v-if="data.item.status.rejected"
+                  class="btn btn-danger rounded-pill px-4 btn-sm fw-bold"
+                  @click="handleCancel(data)"
+                >
+                  HAPUS
                 </button>
               </td>
             </tr>
@@ -220,6 +228,14 @@
                 >
                   Ditolak
                 </div>
+                <p class="h5" v-show="status.rejected">Alasan Ditolak</p>
+                <textarea
+                  class="p-3"
+                  readonly
+                  v-show="selectedData?.reason_for_rejection"
+                  :value="selectedData?.reason_for_rejection"
+                >
+                </textarea>
               </div>
             </div>
           </div>
@@ -251,6 +267,7 @@ const fetchData = async () => {
   try {
     const res = await callAPI("/borrowed_items", "", "GET");
     borrowedList.value = res.result.borrowed_list || [];
+    console.log(res);
   } catch (error) {
     console.log(error);
   }
@@ -259,7 +276,7 @@ const fetchData = async () => {
 // Filter Berdasarkan Tipe (Facility/Room)
 const filteredBorrowedList = computed(() => {
   return borrowedList.value.filter(
-    (item) => item.item.type === activeCategory.value
+    (item) => item.item.type === activeCategory.value,
   );
 });
 
@@ -278,7 +295,7 @@ const openDetail = (data) => {
   status.pending = pending;
   selectedData.value = data;
   const modal = new bootstrap.Modal(
-    document.getElementById("modalDetailBorrowed")
+    document.getElementById("modalDetailBorrowed"),
   );
   modal.show();
 };

@@ -319,7 +319,7 @@ const binding_data = async () => {
   await store_home_admin.get_home_store_officer_and_user(
     "/users_and_officer",
     "",
-    "GET"
+    "GET",
   );
 };
 
@@ -351,7 +351,7 @@ const openAddModal = () => {
 const openEditModal = (item) => {
   isEdit.value = true;
   currentId.value = item.id_user || item.id_officer;
-  formData.value = { ...item, password: "" }; // Password dikosongkan saat edit
+  formData.value = { ...item, password: "" };
   formModal.show();
 };
 
@@ -398,8 +398,7 @@ const deleteData = async (item) => {
           currentTab.value === "user" ? "/admin/users" : "/admin/officers";
         const idKey = currentTab.value === "user" ? "id_user" : "id_officer";
         const payload = { [idKey]: item[idKey] };
-
-        // Mengirim payload dalam body sesuai permintaan
+        console.log(payload);
         const res = await callAPI(endpoint, payload, "DELETE");
         sweet_alert_response_success(res.result.message);
         await binding_data();

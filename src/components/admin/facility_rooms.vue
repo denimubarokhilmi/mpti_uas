@@ -70,11 +70,7 @@
           >
             <div class="facility-img-wrapper me-4">
               <img
-                :src="
-                  item.image.startsWith('http')
-                    ? item.image
-                    : `${path_image}${item.image}`
-                "
+                :src="`${path_image}${item.image}`"
                 class="w-100 h-100 object-fit-cover"
                 :alt="item.name"
               />
@@ -173,6 +169,7 @@
                   class="form-select custom-input"
                   v-model="formAdd.type"
                   required
+                  v-show="!isEdit"
                   :disabled="isEdit"
                 >
                   <option value="" disabled>PILIH KATEGORI</option>
@@ -184,24 +181,30 @@
               <div v-if="formAdd.type">
                 <div class="mb-4">
                   <div
-                    class="upload-box d-flex align-items-center justify-content-center flex-column"
+                    class="upload-box d-flex align-items-center justify-content-center flex-column text-center w-100"
                     @click="$refs.fileInput.click()"
                   >
-                    <i v-if="!review_image" class="bi bi-plus-lg fs-1"></i>
+                    <div
+                      v-if="!review_image"
+                      class="d-flex flex-column align-items-center"
+                    >
+                      <i class="bi bi-plus-lg fs-1"></i>
+                      <span class="fw-bold mt-2">TAMBAHKAN FOTO +</span>
+                    </div>
+
                     <img
                       v-else
                       :src="review_image"
                       class="w-100 h-100 object-fit-cover rounded-3"
                     />
-                    <span v-if="!review_image" class="fw-bold mt-2"
-                      >TAMBAHKAN FOTO +</span
-                    >
+
                     <input
                       type="file"
                       ref="fileInput"
-                      class="d-none"
+                      name="image"
                       @change="handleFileUpload"
                       accept="image/*"
+                      class="d-none"
                     />
                   </div>
                   <small v-if="isEdit" class="text-muted"
@@ -227,6 +230,7 @@
                   }}</label>
                   <input
                     type="number"
+                    :readonly="formAdd.type == 'room'"
                     class="form-control custom-input w-25"
                     v-model="formAdd.quantity_available"
                     required
@@ -344,16 +348,14 @@ const openEditModal = (item) => {
   currentId.value = item.id_room || item.id_facility;
 
   formAdd.value = {
-    type: item.type === "ruangan" ? "room" : "facility",
+    type: item.type === "room" ? "room" : "facility",
     name: item.name,
     quantity_available: item.quantity_available,
     desc: item.desc,
     image: null,
   };
 
-  review_image.value = item.image.startsWith("http")
-    ? item.image
-    : `${path_image}${item.image}`;
+  review_image.value = `${path_image}${item.image}`;
   addModal.show();
 };
 
@@ -367,17 +369,15 @@ const handleFileUpload = (e) => {
 
 const saveItem = async () => {
   try {
-    const typeRoute = formAdd.value.type; // 'room' or 'facility'
+    const typeRoute = formAdd.value.type;
     const formData = new FormData();
 
     formData.append("name", formAdd.value.name);
     formData.append("quantity_available", formAdd.value.quantity_available);
     formData.append("desc", formAdd.value.desc);
-
     if (formAdd.value.image) {
       formData.append("image", formAdd.value.image);
     }
-
     let res;
     if (isEdit.value) {
       // Tambahkan ID ke body untuk update
@@ -394,7 +394,8 @@ const saveItem = async () => {
     await binding_data();
     addModal.hide();
   } catch (error) {
-    sweet_alert_response_error(error.error || "Terjadi kesalahan");
+    const err = await error.json();
+    sweet_alert_response_error(err.error || "Terjadi kesalahan");
   }
 };
 
@@ -420,7 +421,7 @@ const deleteItem = async (item) => {
         const res = await callAPI(
           `/admin/inventory/${typeRoute}`,
           payload,
-          "DELETE"
+          "DELETE",
         );
         sweet_alert_response_success(res.result.message);
         await binding_data();
@@ -494,6 +495,8 @@ onMounted(async () => {
   border-radius: 10px !important;
   padding: 10px 15px;
 }
+/* Tambahkan atau perbarui bagian ini di dalam <style scoped> */
+
 .upload-box {
   background-color: white;
   border-radius: 15px;
@@ -501,6 +504,24 @@ onMounted(async () => {
   border: 2px dashed #bbb;
   cursor: pointer;
   overflow: hidden;
+  position: relative; /* Menjaga konteks posisi */
+  transition: border-color 0.2s;
+}
+
+.upload-box:hover {
+  border-color: #11162c;
+}
+
+/* Memastikan input file benar-benar tidak terlihat dan tidak mengganggu layout */
+input[type="file"] {
+  display: none;
+}
+
+/* Tambahan agar gambar pratinjau mengisi kotak dengan sempurna tanpa celah */
+.upload-box img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
 }
 .btn-simpan {
   background-color: #28a745;
