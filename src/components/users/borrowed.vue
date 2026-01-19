@@ -71,7 +71,7 @@
           </div>
           <div class="text-center mb-3">
             <img
-              :src="selectedItem.image"
+              :src="`${path_image}${selectedItem.image}`"
               class="rounded-4 img-fluid detail-img shadow"
             />
           </div>
