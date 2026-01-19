@@ -63,6 +63,7 @@
                   v-for="item in activeItems"
                   :key="item.borrowed_id"
                   class="borrow-card mb-3 animate-in"
+                  v-show="item.item.status.approved"
                 >
                   <div class="d-flex align-items-center mb-2">
                     <img
