@@ -19,11 +19,13 @@
         <div class="col-12 col-md-4">
           <div class="stat-card shadow-sm h-100 text-center p-4">
             <div class="icon-wrapper mb-3">
+              <i class="bi bi-clock-history"></i>
               <!-- <UserIcon class="icon-dark" :size="48" /> -->
             </div>
             <div class="stat-value display-3 fw-bold text-orange">
               {{ count_borrrowed.pending }}
             </div>
+
             <div class="stat-label fw-bold text-secondary text-uppercase">
               Belum<br />Disetujui
             </div>
@@ -33,6 +35,10 @@
         <div class="col-12 col-md-4">
           <div class="stat-card shadow-sm h-100 text-center p-4">
             <div class="icon-wrapper mb-3">
+              <i
+                class="bi bi-check-circle-fill"
+                style="font-size: 3rem; color: var(--primary-dark)"
+              ></i>
               <!-- <UserIcon class="icon-dark" :size="48" /> -->
             </div>
             <div class="stat-value display-3 fw-bold text-orange">
@@ -47,6 +53,10 @@
         <div class="col-12 col-md-4">
           <div class="stat-card shadow-sm h-100 text-center p-4">
             <div class="icon-wrapper mb-3">
+              <i
+                class="bi bi-card-list"
+                style="font-size: 3rem; color: var(--primary-dark)"
+              ></i>
               <!-- <UserIcon class="icon-dark" :size="48" /> -->
             </div>
             <div class="stat-value display-3 fw-bold text-orange">
@@ -60,6 +70,10 @@
         <div class="col-12 col-md-4">
           <div class="stat-card shadow-sm h-100 text-center p-4">
             <div class="icon-wrapper mb-3">
+              <i
+                class="bi bi-x-circle-fill"
+                style="font-size: 3rem; color: var(--primary-dark)"
+              ></i>
               <!-- <UserIcon class="icon-dark" :size="48" /> -->
             </div>
             <div class="stat-value display-3 fw-bold text-orange">
@@ -110,6 +124,10 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.bi-clock-history {
+  color: var(--primary-dark);
+  font-size: 3rem;
+}
 /* Color Palette */
 .text-dark-blue {
   color: #11162c;

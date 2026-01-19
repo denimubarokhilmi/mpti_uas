@@ -146,7 +146,7 @@
                     @click="confirmAction('tidak')"
                     class="btn btn-danger w-50 py-2 fw-bold rounded-pill"
                   >
-                    TIDAK
+                    TOLAK
                   </button>
                 </div>
                 <div class="mb-3">
@@ -246,7 +246,7 @@ const confirmAction = async (type) => {
           },
           "PUT",
         );
-        console.log(res);
+        await fetchData();
         sweet_alert_response_success(res.result.message);
       }
     });

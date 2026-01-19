@@ -1,5 +1,16 @@
 <template>
   <div class="container-fluid py-5 min-vh-100 bg-light-texture">
+    <div class="container">
+      <div class="row mb-5 align-items-center">
+        <div class="col-md-6">
+          <h1 class="display-3 fw-light text-secondary mb-0">RIWAYAT</h1>
+          <!-- <h1 class="display-4 fw-bold text-dark-blue mt-n2"></h1> -->
+        </div>
+        <div class="col-md-6 text-end d-none d-md-block">
+          <div class="header-line"></div>
+        </div>
+      </div>
+    </div>
     <div class="row mb-4 px-md-5">
       <div class="col-12 d-flex gap-2">
         <button
@@ -321,8 +332,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.header-line {
+  height: 2px;
+  background: linear-gradient(to right, #dee2e6, #11162c);
+  width: 100%;
+}
 .bg-light-texture {
-  background-image: url("https://www.transparenttextures.com/patterns/white-wall-3.png");
+  /* background-image: url("https://www.transparenttextures.com/patterns/white-wall-3.png"); */
   background-color: #f8f9fa;
 }
 

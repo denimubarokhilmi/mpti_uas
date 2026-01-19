@@ -32,7 +32,7 @@
           </div>
           <button
             @click="openAddModal"
-            class="btn btn-primary btn-sm rounded-pill px-4"
+            class="btn btn-sm fs-5 rounded-pill px-4"
           >
             + TAMBAHKAN
           </button>
@@ -92,7 +92,7 @@
           <div class="modal-header border-0 pb-0">
             <button
               type="button"
-              class="btn-link text-dark text-decoration-none fw-bold"
+              class="btn-link border-0 p-2 rounded text-dark text-decoration-none fw-bold"
               data-bs-dismiss="modal"
             >
               KEMBALI
@@ -417,6 +417,10 @@ const deleteData = async (item) => {
 .text-primary-dark {
   color: #11162c;
   letter-spacing: 1px;
+}
+th {
+  background-color: var(--primary-dark);
+  color: white;
 }
 .btn-add-text {
   background: none;

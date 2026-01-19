@@ -26,6 +26,7 @@
             >
               <i class="bi bi-sliders"></i>
             </div>
+
             <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
               <li><h6 class="dropdown-header">Filter Berdasarkan:</h6></li>
               <li>
@@ -89,13 +90,13 @@
                 <i class="bi bi-eye fs-5"></i>
               </div>
               <div
-                class="text-white action-icon bg-warning-subtle p-2 rounded-circle d-flex align-items-center"
+                class="text-white action-icon p-2 rounded-circle d-flex align-items-center"
                 @click="openEditModal(item)"
               >
                 <i class="bi bi-pencil-square fs-5 text-warning"></i>
               </div>
               <div
-                class="text-white action-icon bg-danger-subtle p-2 rounded-circle d-flex align-items-center"
+                class="text-white action-icon p-2 rounded-circle d-flex align-items-center"
                 @click="deleteItem(item)"
               >
                 <i class="bi bi-trash fs-5 text-danger"></i>
@@ -154,7 +155,7 @@
           <div class="modal-header border-0 pb-0">
             <button
               type="button"
-              class="btn-link p-3 text-dark text-decoration-none fw-bold"
+              class="btn-link border-0 rounded p-3 text-dark text-decoration-none fw-bold"
               data-bs-dismiss="modal"
             >
               KEMBALI

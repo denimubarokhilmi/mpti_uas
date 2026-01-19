@@ -50,11 +50,11 @@
       </div>
     </div>
 
-    <div
+    <!-- <div
       class="map-section mt-5 rounded-4 d-flex align-items-center justify-content-center shadow-sm"
     >
       <p class="text-secondary fw-medium m-0">opsional map kampus</p>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -82,22 +82,22 @@ const mainStats = computed(() => [
   {
     label: "Belum Disetujui",
     count: borrowedData.value.filter((i) => i.item.status.pending).length,
-    icon: "bi bi-clipboard-data",
+    icon: "bi  bi-clock-history",
   },
   {
     label: "Telah Disetujui",
     count: borrowedData.value.filter((i) => i.item.status.approved).length,
-    icon: "bi bi-patch-check",
+    icon: "bi bi-check-circle-fill",
   },
   {
     label: "Ditolak",
     count: borrowedData.value.filter((i) => i.item.status.rejected).length,
-    icon: "bi bi-file-excel",
+    icon: "bi bi-x-circle-fill",
   },
   {
     label: "Total Peminjaman",
     count: borrowedData.value.length,
-    icon: "bi bi-list-ul",
+    icon: "bi bi-card-list",
   },
 ]);
 

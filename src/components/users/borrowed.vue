@@ -1,5 +1,14 @@
 <template>
   <div class="container py-5 min-vh-100">
+    <div class="row mb-5 align-items-center">
+      <div class="col-md-6">
+        <h1 class="display-3 fw-light text-secondary mb-0">PEMINJAMAN</h1>
+        <!-- <h1 class="display-4 fw-bold text-dark-blue mt-n2"></h1> -->
+      </div>
+      <div class="col-md-6 text-end d-none d-md-block">
+        <div class="header-line"></div>
+      </div>
+    </div>
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div class="d-flex gap-2">
         <button
@@ -143,6 +152,7 @@
                 <input
                   v-model="formPinjam.quantity"
                   type="number"
+                  min="0"
                   class="form-control rounded-3 custom-input"
                 />
               </div>
@@ -153,6 +163,7 @@
                 <input
                   v-model="formPinjam.start_date"
                   type="date"
+                  :min="now_date_limit"
                   class="form-control rounded-3 custom-input"
                 />
               </div>
@@ -161,6 +172,7 @@
                 <input
                   v-model="formPinjam.end_date"
                   type="date"
+                  :min="current_end_date"
                   class="form-control rounded-3 custom-input"
                 />
               </div>
@@ -213,7 +225,7 @@
 
 <script setup>
 import { callAPI } from "@/store/helper.js";
-import { reactive, ref, onMounted, computed } from "vue";
+import { reactive, ref, onMounted, computed, watch } from "vue";
 import role_store from "@/store/role_store.js";
 import {
   sweet_alert_response_error,
@@ -233,6 +245,16 @@ const formPinjam = reactive({
   end_time: "",
   alasan: "",
 });
+const now_date_limit = new Date().toISOString().split("T")[0];
+const current_end_date = ref("");
+watch(
+  () => formPinjam,
+  (newValue, oldValue) => {
+    current_end_date.value = newValue.start_date;
+  },
+  { deep: true },
+);
+
 const data_currents = ref({});
 const binding_data = async () => {
   try {
@@ -301,6 +323,11 @@ const submitPeminjaman = async () => {
 </script>
 
 <style scoped>
+.header-line {
+  height: 2px;
+  background: linear-gradient(to right, #dee2e6, #11162c);
+  width: 100%;
+}
 .btn-dark-blue {
   background-color: #11162c;
   color: white;

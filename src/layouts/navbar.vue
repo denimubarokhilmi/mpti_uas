@@ -1,9 +1,16 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">
-        <i class="bi bi-building-check me-2"></i>TEMAN SIPUS
-      </a>
+      <div>
+        <img
+          src="@/assets/img/logo.jpeg"
+          alt="logo"
+          class="logo navbar-brand"
+        />
+        <!-- <a class="navbar-brand fw-bold" href="#">
+          <i class="bi bi-building-check me-2"></i>TEMAN SIPUS
+        </a> -->
+      </div>
 
       <button
         class="navbar-toggler border-0 shadow-none"
@@ -19,10 +26,10 @@
       </button>
 
       <div
-        :class="['collapse navbar-collapse', { show: isMenuOpen }]"
+        :class="['collapse navbar-collapse ', { show: isMenuOpen }]"
         id="navbarNav"
       >
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
+        <ul class="navbar-nav ms-5 mb-2 mb-lg-0 text-center">
           <li
             class="nav-item"
             v-for="(item, index) in props_navbar.menu"
@@ -176,6 +183,12 @@ const logOut = () => {
 </script>
 
 <style scoped>
+.logo {
+  width: 60px;
+  display: block;
+  border-radius: 50%;
+}
+
 .custom-navbar {
   background-color: #11162c;
   padding: 1rem 0;

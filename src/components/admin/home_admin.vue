@@ -52,7 +52,9 @@
           ></span>
           <div>
             <small class="d-block text-secondary fw-bold">TOTAL PETUGAS</small>
-            <span class="fw-bold text-warning">{{ count_officer.length }}</span>
+            <span class="fw-bold ms-5 text-warning">{{
+              count_officer.length
+            }}</span>
           </div>
         </div>
         <div class="col-auto d-flex align-items-center me-4">
@@ -64,7 +66,9 @@
             <small class="d-block text-secondary fw-bold"
               >TOTAL MAHASISWA</small
             >
-            <span class="fw-bold text-warning">{{ count_users.length }}</span>
+            <span class="fw-bold ms-5 text-warning">{{
+              count_users.length
+            }}</span>
           </div>
         </div>
         <div class="col-auto d-flex align-items-center">
@@ -74,7 +78,7 @@
           ></span>
           <div>
             <small class="d-block text-secondary fw-bold">TOTAL PENGGUNA</small>
-            <span class="fw-bold text-warning">{{
+            <span class="fw-bold ms-5 text-warning">{{
               count_users.length + count_officer.length
             }}</span>
           </div>
@@ -115,7 +119,7 @@ onMounted(async () => {
     await store_home_admin.get_home_store_officer_and_user(
       "/users_and_officer",
       "",
-      "GET"
+      "GET",
     );
 
     const result = home_store.value;
@@ -127,7 +131,7 @@ onMounted(async () => {
     const userDataForChart = getCountPerYear(count_users, xValues);
     const officerDataForChart = getCountPerYear(count_officer, xValues);
     const totalDataForChart = xValues.map(
-      (_, i) => userDataForChart[i] + officerDataForChart[i]
+      (_, i) => userDataForChart[i] + officerDataForChart[i],
     );
 
     const ctx = document.getElementById("myChart");
@@ -196,8 +200,8 @@ onMounted(async () => {
 }
 /* Card Statistik Dashboard */
 .stat-card {
-  background-color: #d9d9d9; /* Warna abu-abu sesuai gambar */
-  border: 2px solid #11162c;
+  background-color: #d9d9d9;
+  border: 2px solid var(--accent-blue);
   border-radius: 20px;
   padding: 30px;
   text-align: center;
@@ -205,8 +209,8 @@ onMounted(async () => {
 }
 
 .stat-icon-box {
-  background-color: #11162c;
-  color: white;
+  /* background-color: #11162c; */
+  color: #11162c;
   width: 60px;
   height: 60px;
   margin: 0 auto 15px;
@@ -214,7 +218,7 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  font-size: 1.5rem;
+  font-size: 3rem;
 }
 
 .stat-number {

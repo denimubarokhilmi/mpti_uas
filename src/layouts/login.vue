@@ -13,6 +13,7 @@
               <div class="mb-5 text-start">
                 <label class="text-white small mb-1">NIP/NIM</label>
                 <input
+                  required
                   type="text"
                   class="form-control input-underlined"
                   placeholder="MASUKKAN NIP/NIM"
@@ -23,6 +24,7 @@
               <div class="mb-5 text-start">
                 <label class="text-white small mb-1">KATA SANDI</label>
                 <input
+                  required
                   type="password"
                   class="form-control input-underlined"
                   placeholder="MASUKKAN KATA SANDI"
