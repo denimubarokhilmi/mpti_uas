@@ -12,8 +12,8 @@
       </div>
     </div>
     <div class="row mb-4 px-md-5">
-      <div class="col-12 d-flex gap-2">
-        <button
+      <div class="col-12 d-flex justify-content-end pe-4 gap-2">
+        <!-- <button
           @click="activeCategory = 'facility'"
           :class="[
             'btn fw-bold px-4 py-2 rounded-3',
@@ -30,7 +30,45 @@
           ]"
         >
           RUANGAN
-        </button>
+        </button> -->
+        <div class="dropdown">
+          <div
+            class="filter-icon"
+            id="filterDropdown"
+            data-bs-toggle="dropdown"
+          >
+            <i class="bi bi-sliders"></i>
+          </div>
+
+          <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
+            <li><h6 class="dropdown-header">Filter Berdasarkan:</h6></li>
+            <li>
+              <a
+                class="dropdown-item rounded"
+                href="#"
+                @click="filterType = 'facility'"
+                >Fasilitas</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item rounded"
+                href="#"
+                @click="filterType = 'room'"
+                >Ruangan</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item rounded"
+                href="#"
+                @click="filterType = 'semua'"
+                >Tampilkan Semua</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 

@@ -9,8 +9,8 @@
         <div class="header-line"></div>
       </div>
     </div>
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <div class="d-flex gap-2">
+    <div class="d-flex gap-3 justify-content-end align-items-center mb-4">
+      <!-- <div class="d-flex gap-2">
         <button
           @click="activeCategory = 'facility'"
           :class="[
@@ -29,7 +29,7 @@
         >
           RUANGAN
         </button>
-      </div>
+      </div> -->
       <button
         class="btn btn-outline-dark rounded-pill px-4"
         data-bs-toggle="modal"
@@ -37,6 +37,40 @@
       >
         <i class="bi bi-list-check me-2"></i> PINJAM
       </button>
+      <div class="dropdown">
+        <div class="filter-icon" id="filterDropdown" data-bs-toggle="dropdown">
+          <i class="bi bi-sliders"></i>
+        </div>
+
+        <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
+          <li><h6 class="dropdown-header">Filter Berdasarkan:</h6></li>
+          <li>
+            <a
+              class="dropdown-item rounded"
+              href="#"
+              @click="activeCategory = 'facility'"
+              >Fasilitas</a
+            >
+          </li>
+          <li>
+            <a
+              class="dropdown-item rounded"
+              href="#"
+              @click="activeCategory = 'room'"
+              >Ruangan</a
+            >
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <!-- <li>
+            <a
+              class="dropdown-item rounded"
+              href="#"
+              @click="activeCategory = 'semua'"
+              >Tampilkan Semua</a
+            >
+          </li> -->
+        </ul>
+      </div>
     </div>
 
     <div class="row g-4">
@@ -268,9 +302,12 @@ const binding_data = async () => {
 };
 
 const filteredData = computed(() => {
+  console.log(activeCategory.value);
   return activeCategory.value === "facility"
     ? data_inventory.facility
-    : data_inventory.room;
+    : activeCategory.value == "room"
+      ? data_inventory.room
+      : "";
 });
 
 const showDetail = (item) => {
