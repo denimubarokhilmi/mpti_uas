@@ -26,7 +26,10 @@
       </button>
 
       <div
-        :class="['collapse navbar-collapse ', { show: isMenuOpen }]"
+        :class="[
+          'collapse justify-content-between  navbar-collapse ',
+          { show: isMenuOpen },
+        ]"
         id="navbarNav"
       >
         <ul class="navbar-nav ms-5 mb-2 mb-lg-0 text-center">
@@ -46,7 +49,7 @@
           </li>
         </ul>
 
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-end">
           <div class="dropdown">
             <a
               class="nav-link dropdown-toggle d-flex align-items-center text-white cursor-pointer"

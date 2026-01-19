@@ -1,8 +1,17 @@
 <template>
   <div class="dashboard-container min-vh-100 p-4 p-md-5">
     <section>
-      <div class="d-flex gap-2 mb-4">
-        <button
+      <div class="row mb-5 align-items-center">
+        <div class="col-md-6">
+          <h1 class="display-3 fw-light text-secondary mb-0">RIWAYAT</h1>
+          <!-- <h1 class="display-4 fw-bold text-dark-blue mt-n2"></h1> -->
+        </div>
+        <div class="col-md-6 text-end d-none d-md-block">
+          <div class="header-line"></div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end gap-4 mb-4">
+        <!-- <button
           @click="activeCategory = 'facility'"
           :class="[
             'btn filter-btn px-4 py-2',
@@ -19,7 +28,45 @@
           ]"
         >
           RUANGAN
-        </button>
+        </button> -->
+        <div class="dropdown">
+          <div
+            class="filter-icon"
+            id="filterDropdown"
+            data-bs-toggle="dropdown"
+          >
+            <i class="bi bi-sliders"></i>
+          </div>
+
+          <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
+            <li><h6 class="dropdown-header">Filter Berdasarkan:</h6></li>
+            <li>
+              <a
+                class="dropdown-item rounded"
+                href="#"
+                @click="activeCategory = 'facility'"
+                >Fasilitas</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item rounded"
+                href="#"
+                @click="activeCategory = 'room'"
+                >Ruangan</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <!-- <li>
+                <a
+                  class="dropdown-item rounded"
+                  href="#"
+                  @click="filterType = 'semua'"
+                  >Tampilkan Semua</a
+                >
+              </li> -->
+          </ul>
+        </div>
       </div>
 
       <div class="table-responsive shadow-sm rounded-4">

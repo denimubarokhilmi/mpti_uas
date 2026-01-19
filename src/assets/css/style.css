@@ -52,3 +52,9 @@ body {
   background-color: #e67700;
   color: white;
 }
+
+.filter-icon {
+  font-size: 1.6rem;
+  color: #11162c;
+  cursor: pointer;
+}
