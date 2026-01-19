@@ -46,7 +46,7 @@
               <a
                 class="dropdown-item rounded"
                 href="#"
-                @click="filterType = 'facility'"
+                @click="activeCategory = 'facility'"
                 >Fasilitas</a
               >
             </li>
@@ -54,19 +54,19 @@
               <a
                 class="dropdown-item rounded"
                 href="#"
-                @click="filterType = 'room'"
+                @click="activeCategory = 'room'"
                 >Ruangan</a
               >
             </li>
             <li><hr class="dropdown-divider" /></li>
-            <li>
+            <!-- <li>
               <a
                 class="dropdown-item rounded"
                 href="#"
                 @click="filterType = 'semua'"
                 >Tampilkan Semua</a
               >
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
