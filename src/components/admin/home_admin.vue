@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-wrapper min-vh-100 bg-white">
+  <div class="home-admin dashboard-wrapper p-2">
     <div class="container mt-5">
       <div class="row mb-5">
         <div class="col-12">
@@ -191,6 +191,13 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.home-admin {
+  background-image: url("@/assets/img/bg_mpti.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+}
 .text-primary-dark {
   color: #11162c;
 }

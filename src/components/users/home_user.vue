@@ -139,8 +139,11 @@ onMounted(async () => {
 
 /* Background Page (Berdasarkan gambar salju/putih bertekstur) */
 .landing-page {
-  background-image: url("https://www.transparenttextures.com/patterns/white-wall-2.png"); /* Opsional: Tekstur halus */
-  background-color: #f8f9fa;
+  background-image: url("@/assets/img/bg_mpti.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
 }
 
 /* Header Line */

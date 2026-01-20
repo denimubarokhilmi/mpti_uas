@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-texture min-vh-100">
+  <div class="calendars bg-texture min-vh-100">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-9 p-4">
@@ -217,6 +217,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.calendars {
+  background-image: url("@/assets/img/bg_mpti.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+}
 .data_borrowed {
   background-color: #11162c;
   color: white;

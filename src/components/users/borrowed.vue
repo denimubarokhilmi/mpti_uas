@@ -1,260 +1,269 @@
 <template>
-  <div class="container py-5 min-vh-100">
-    <div class="row mb-5 align-items-center">
-      <div class="col-md-6">
-        <h1 class="display-3 fw-light text-secondary mb-0">PEMINJAMAN</h1>
-        <!-- <h1 class="display-4 fw-bold text-dark-blue mt-n2"></h1> -->
-      </div>
-      <div class="col-md-6 text-end d-none d-md-block">
-        <div class="header-line"></div>
-      </div>
-    </div>
-    <div class="d-flex gap-3 justify-content-end align-items-center mb-4">
-      <!-- <div class="d-flex gap-2">
-        <button
-          @click="activeCategory = 'facility'"
-          :class="[
-            'btn fw-bold px-4 py-2',
-            activeCategory === 'facility' ? 'btn-orange' : 'btn-dark-blue',
-          ]"
-        >
-          FASILITAS
-        </button>
-        <button
-          @click="activeCategory = 'room'"
-          :class="[
-            'btn fw-bold px-4 py-2',
-            activeCategory === 'room' ? 'btn-orange' : 'btn-dark-blue',
-          ]"
-        >
-          RUANGAN
-        </button>
-      </div> -->
-      <button
-        class="btn btn-outline-dark rounded-pill px-4"
-        data-bs-toggle="modal"
-        data-bs-target="#modalPinjam"
-      >
-        <i class="bi bi-list-check me-2"></i> PINJAM
-      </button>
-      <div class="dropdown">
-        <div class="filter-icon" id="filterDropdown" data-bs-toggle="dropdown">
-          <i class="bi bi-sliders"></i>
+  <section class="borrowed-user container-fluid">
+    <div class="container py-5 min-vh-100">
+      <div class="row mb-5 align-items-center">
+        <div class="col-md-6">
+          <h1 class="display-3 fw-light text-secondary mb-0">PEMINJAMAN</h1>
+          <!-- <h1 class="display-4 fw-bold text-dark-blue mt-n2"></h1> -->
         </div>
-
-        <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
-          <li><h6 class="dropdown-header">Filter Berdasarkan:</h6></li>
-          <li>
-            <a
-              class="dropdown-item rounded"
-              href="#"
-              @click="activeCategory = 'facility'"
-              >Fasilitas</a
-            >
-          </li>
-          <li>
-            <a
-              class="dropdown-item rounded"
-              href="#"
-              @click="activeCategory = 'room'"
-              >Ruangan</a
-            >
-          </li>
-          <li><hr class="dropdown-divider" /></li>
-          <!-- <li>
-            <a
-              class="dropdown-item rounded"
-              href="#"
-              @click="activeCategory = 'semua'"
-              >Tampilkan Semua</a
-            >
-          </li> -->
-        </ul>
+        <div class="col-md-6 text-end d-none d-md-block">
+          <div class="header-line"></div>
+        </div>
       </div>
-    </div>
-
-    <div class="row g-4">
-      <div
-        v-for="item in filteredData"
-        :key="item.id_facility || item.id_room"
-        class="col-md-6"
-      >
-        <div
-          v-if="item?.status?.available"
-          class="item-card d-flex align-items-center p-3 shadow-sm"
-        >
-          <div class="image-wrapper me-3">
-            <img
-              :src="`${path_image}${item.image}`"
-              :alt="item.name"
-              class="rounded-pill img-fluid shadow-sm"
-            />
-          </div>
-          <div class="flex-grow-1">
-            <h4 class="text-uppercase mb-0 text-white fw-bold">
-              {{ item.name }}
-            </h4>
-          </div>
-          <button class="btn text-white fs-4" @click="showDetail(item)">
-            <i class="bi bi-eye"></i>
+      <div class="d-flex gap-3 justify-content-end align-items-center mb-4">
+        <!-- <div class="d-flex gap-2">
+          <button
+            @click="activeCategory = 'facility'"
+            :class="[
+              'btn fw-bold px-4 py-2',
+              activeCategory === 'facility' ? 'btn-orange' : 'btn-dark-blue',
+            ]"
+          >
+            FASILITAS
           </button>
+          <button
+            @click="activeCategory = 'room'"
+            :class="[
+              'btn fw-bold px-4 py-2',
+              activeCategory === 'room' ? 'btn-orange' : 'btn-dark-blue',
+            ]"
+          >
+            RUANGAN
+          </button>
+        </div> -->
+        <button
+          class="btn btn-outline-dark rounded-pill px-4"
+          data-bs-toggle="modal"
+          data-bs-target="#modalPinjam"
+        >
+          <i class="bi bi-list-check me-2"></i> PINJAM
+        </button>
+        <div class="dropdown">
+          <div
+            class="filter-icon"
+            id="filterDropdown"
+            data-bs-toggle="dropdown"
+          >
+            <i class="bi bi-sliders"></i>
+          </div>
+
+          <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
+            <li><h6 class="dropdown-header">Filter Berdasarkan:</h6></li>
+            <li>
+              <a
+                class="dropdown-item rounded"
+                href="#"
+                @click="activeCategory = 'facility'"
+                >Fasilitas</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item rounded"
+                href="#"
+                @click="activeCategory = 'room'"
+                >Ruangan</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <!-- <li>
+              <a
+                class="dropdown-item rounded"
+                href="#"
+                @click="activeCategory = 'semua'"
+                >Tampilkan Semua</a
+              >
+            </li> -->
+          </ul>
         </div>
       </div>
-    </div>
 
-    <div class="modal fade" id="modalDetail" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-modal-bg rounded-4 p-4 border-0">
-          <div class="d-flex justify-content-end">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-            ></button>
-          </div>
-          <div class="text-center mb-3">
-            <img
-              :src="`${path_image}${selectedItem.image}`"
-              class="rounded-4 img-fluid detail-img shadow"
-            />
-          </div>
-          <div class="info-text text-dark-blue px-3">
-            <p class="mb-1"><strong>NAMA :</strong> {{ selectedItem.name }}</p>
-            <p class="mb-1">
-              <strong>TERSEDIA :</strong> {{ selectedItem.quantity_available }}
-            </p>
-            <p class="mb-0">
-              <strong>DESKRIPSI :</strong> {{ selectedItem.desc }}
-            </p>
+      <div class="row g-4">
+        <div
+          v-for="item in filteredData"
+          :key="item.id_facility || item.id_room"
+          class="col-md-6"
+        >
+          <div
+            v-if="item?.status?.available"
+            class="item-card d-flex align-items-center p-3 shadow-sm"
+          >
+            <div class="image-wrapper me-3">
+              <img
+                :src="`${path_image}${item.image}`"
+                :alt="item.name"
+                class="rounded-pill img-fluid shadow-sm"
+              />
+            </div>
+            <div class="flex-grow-1">
+              <h4 class="text-uppercase mb-0 text-white fw-bold">
+                {{ item.name }}
+              </h4>
+            </div>
+            <button class="btn text-white fs-4" @click="showDetail(item)">
+              <i class="bi bi-eye"></i>
+            </button>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="modal fade" id="modalPinjam" tabindex="-1">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content custom-modal-bg rounded-4 p-5 border-0">
-          <h2 class="text-dark-blue fw-bold mb-4">PEMINJAMAN</h2>
-          <form @submit.prevent="submitPeminjaman">
-            <div class="mb-3">
-              <label class="fw-bold">NAMA</label>
-              <input
-                v-model="data_currents.name"
-                readonly
-                type="text"
-                class="form-control rounded-pill custom-input"
-              />
-            </div>
-            <div class="mb-3">
-              <label class="fw-bold">NIM/NIP</label>
-              <input
-                v-model="data_currents.nim"
-                readonly
-                type="text"
-                class="form-control rounded-pill custom-input"
-              />
-            </div>
-            <div class="mb-3">
-              <label class="fw-bold">NO TELEPON</label>
-              <input
-                v-model="data_currents.phone_number"
-                readonly
-                type="text"
-                class="form-control rounded-pill custom-input"
-              />
-            </div>
-            <div class="mb-3">
-              <label class="fw-bold"
-                >PILIH {{ activeCategory.toUpperCase() }}</label
-              >
-
-              <select
-                v-model="formPinjam.items_id"
-                class="form-select rounded-pill custom-input"
-              >
-                <option
-                  v-for="opt in filteredData"
-                  :key="opt.id_facility || opt.id_room"
-                  :value="opt.id_facility || opt.id_room"
-                  v-show="opt.status.available"
-                >
-                  {{ opt.name }}
-                </option>
-              </select>
-              <div v-if="activeCategory == 'facility'" class="mb-3">
-                <label class="fw-bold">quantity</label>
-                <input
-                  v-model="formPinjam.quantity"
-                  type="number"
-                  min="0"
-                  class="form-control rounded-3 custom-input"
-                />
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-6 col-md-3">
-                <label class="fw-bold small">TANGGAL MULAI</label>
-                <input
-                  v-model="formPinjam.start_date"
-                  type="date"
-                  :min="now_date_limit"
-                  class="form-control rounded-3 custom-input"
-                />
-              </div>
-              <div class="col-6 col-md-3">
-                <label class="fw-bold small">TANGGAL SELESAI</label>
-                <input
-                  v-model="formPinjam.end_date"
-                  type="date"
-                  :min="current_end_date"
-                  class="form-control rounded-3 custom-input"
-                />
-              </div>
-              <div class="col-6 col-md-3">
-                <label class="fw-bold small">JAM MULAI</label>
-                <input
-                  v-model="formPinjam.start_time"
-                  type="time"
-                  class="form-control rounded-3 custom-input"
-                />
-              </div>
-              <div class="col-6 col-md-3">
-                <label class="fw-bold small">JAM SELESAI</label>
-                <input
-                  v-model="formPinjam.end_time"
-                  type="time"
-                  class="form-control rounded-3 custom-input"
-                />
-              </div>
-            </div>
-            <div class="mb-4">
-              <label class="fw-bold">ALASAN PENGAJUAN</label>
-              <textarea
-                v-model="formPinjam.alasan"
-                class="form-control rounded-3 custom-input"
-                rows="3"
-              ></textarea>
-            </div>
-            <div class="d-flex justify-content-center gap-3">
-              <button
-                type="submit"
-                class="btn btn-success rounded-pill px-5 fw-bold"
-              >
-                AJUKAN
-              </button>
+      <div class="modal fade" id="modalDetail" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content custom-modal-bg rounded-4 p-4 border-0">
+            <div class="d-flex justify-content-end">
               <button
                 type="button"
-                class="btn btn-danger rounded-pill px-5 fw-bold"
+                class="btn-close"
                 data-bs-dismiss="modal"
-              >
-                BATAL
-              </button>
+              ></button>
             </div>
-          </form>
+            <div class="text-center mb-3">
+              <img
+                :src="`${path_image}${selectedItem.image}`"
+                class="rounded-4 img-fluid detail-img shadow"
+              />
+            </div>
+            <div class="info-text text-dark-blue px-3">
+              <p class="mb-1">
+                <strong>NAMA :</strong> {{ selectedItem.name }}
+              </p>
+              <p class="mb-1">
+                <strong>TERSEDIA :</strong>
+                {{ selectedItem.quantity_available }}
+              </p>
+              <p class="mb-0">
+                <strong>DESKRIPSI :</strong> {{ selectedItem.desc }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalPinjam" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content custom-modal-bg rounded-4 p-5 border-0">
+            <h2 class="text-dark-blue fw-bold mb-4">PEMINJAMAN</h2>
+            <form @submit.prevent="submitPeminjaman">
+              <div class="mb-3">
+                <label class="fw-bold">NAMA</label>
+                <input
+                  v-model="data_currents.name"
+                  readonly
+                  type="text"
+                  class="form-control rounded-pill custom-input"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="fw-bold">NIM/NIP</label>
+                <input
+                  v-model="data_currents.nim"
+                  readonly
+                  type="text"
+                  class="form-control rounded-pill custom-input"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="fw-bold">NO TELEPON</label>
+                <input
+                  v-model="data_currents.phone_number"
+                  readonly
+                  type="text"
+                  class="form-control rounded-pill custom-input"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="fw-bold"
+                  >PILIH {{ activeCategory.toUpperCase() }}</label
+                >
+
+                <select
+                  v-model="formPinjam.items_id"
+                  class="form-select rounded-pill custom-input"
+                >
+                  <option
+                    v-for="opt in filteredData"
+                    :key="opt.id_facility || opt.id_room"
+                    :value="opt.id_facility || opt.id_room"
+                    v-show="opt.status.available"
+                  >
+                    {{ opt.name }}
+                  </option>
+                </select>
+                <div v-if="activeCategory == 'facility'" class="mb-3">
+                  <label class="fw-bold">quantity</label>
+                  <input
+                    v-model="formPinjam.quantity"
+                    type="number"
+                    min="0"
+                    class="form-control rounded-3 custom-input"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-6 col-md-3">
+                  <label class="fw-bold small">TANGGAL MULAI</label>
+                  <input
+                    v-model="formPinjam.start_date"
+                    type="date"
+                    :min="now_date_limit"
+                    class="form-control rounded-3 custom-input"
+                  />
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="fw-bold small">TANGGAL SELESAI</label>
+                  <input
+                    v-model="formPinjam.end_date"
+                    type="date"
+                    :min="current_end_date"
+                    class="form-control rounded-3 custom-input"
+                  />
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="fw-bold small">JAM MULAI</label>
+                  <input
+                    v-model="formPinjam.start_time"
+                    type="time"
+                    class="form-control rounded-3 custom-input"
+                  />
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="fw-bold small">JAM SELESAI</label>
+                  <input
+                    v-model="formPinjam.end_time"
+                    type="time"
+                    class="form-control rounded-3 custom-input"
+                  />
+                </div>
+              </div>
+              <div class="mb-4">
+                <label class="fw-bold">ALASAN PENGAJUAN</label>
+                <textarea
+                  v-model="formPinjam.alasan"
+                  class="form-control rounded-3 custom-input"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="d-flex justify-content-center gap-3">
+                <button
+                  type="submit"
+                  class="btn btn-success rounded-pill px-5 fw-bold"
+                >
+                  AJUKAN
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger rounded-pill px-5 fw-bold"
+                  data-bs-dismiss="modal"
+                >
+                  BATAL
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -360,6 +369,13 @@ const submitPeminjaman = async () => {
 </script>
 
 <style scoped>
+.borrowed-user {
+  background-image: url("@/assets/img/bg_mpti.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+}
 .header-line {
   height: 2px;
   background: linear-gradient(to right, #dee2e6, #11162c);

@@ -380,8 +380,11 @@ onMounted(() => {
   width: 100%;
 }
 .bg-light-texture {
-  /* background-image: url("https://www.transparenttextures.com/patterns/white-wall-3.png"); */
-  background-color: #f8f9fa;
+  background-image: url("@/assets/img/bg_mpti.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
 }
 
 /* Tombol Filter */

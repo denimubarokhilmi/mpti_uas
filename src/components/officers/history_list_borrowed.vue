@@ -320,8 +320,11 @@ onMounted(fetchData);
 <style scoped>
 .dashboard-container {
   background-color: #f8f9fa;
-  background-image: radial-gradient(#ced4da 0.8px, transparent 0.8px);
-  background-size: 20px 20px;
+  background-image: url("@/assets/img/bg_mpti.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
 }
 
 .text-dark-blue {
