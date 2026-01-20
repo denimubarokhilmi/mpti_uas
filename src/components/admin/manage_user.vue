@@ -204,11 +204,27 @@
                 </div>
                 <div class="col-md-12 mb-3" v-if="currentTab === 'user'">
                   <label class="fw-bold small mb-1">PROGRAM STUDI</label>
-                  <input
+                  <select
+                    class="form-select custom-input"
+                    v-model="formData.study_program"
+                    required
+                  >
+                    <option value="" disabled>PILIH Study Program</option>
+                    <option value="Teknik Informatika">
+                      Teknik Informatika
+                    </option>
+                    <option value="Manajemen Informatika">
+                      Manajemen Informatika
+                    </option>
+                    <option value="Komputerisasi Akuntansi">
+                      Komputerisasi Akuntansi
+                    </option>
+                  </select>
+                  <!-- <input
                     type="text"
                     class="form-control custom-input"
                     v-model="formData.study_program"
-                  />
+                  /> -->
                 </div>
               </div>
               <div class="d-flex justify-content-end gap-3 mt-4">

@@ -314,8 +314,12 @@ const status = reactive({ approved: "", rejected: "", pending: "" });
 // Ambil Data
 const fetchData = async () => {
   try {
+    await role.get_current_user("/users", "", "GET");
     const res = await callAPI("/borrowed_items", "", "GET");
-    borrowedList.value = res.result.borrowed_list || [];
+    borrowedList.value =
+      res.result.borrowed_list.filter(
+        (el) => el.user_id == role.data_current.id_user,
+      ) || [];
     console.log(res);
   } catch (error) {
     console.log(error);

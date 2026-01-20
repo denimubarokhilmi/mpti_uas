@@ -118,6 +118,14 @@
                 }}
               </td>
             </tr>
+            <tr v-if="filteredList.length === 0">
+              <td
+                :colspan="activeCategory === 'facility' ? 6 : 6"
+                class="py-5 text-muted"
+              >
+                Tidak ada data peminjaman untuk kategori ini.
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
