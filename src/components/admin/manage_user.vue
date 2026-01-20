@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-texture min-vh-100 pb-5">
+  <div class="bg-texture min-vh-100 p-2 manage-user">
     <div class="container mt-5">
       <div class="row align-items-center mb-4">
         <div class="col-md-6">
@@ -427,6 +427,13 @@ const deleteData = async (item) => {
 </script>
 
 <style scoped>
+.manage-user {
+  background-image: url("@/assets/img/bg_mpti.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+}
 .bg-dark-blue {
   background-color: #11162c;
 }

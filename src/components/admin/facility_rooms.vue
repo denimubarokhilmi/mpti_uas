@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-texture min-vh-100 pb-5">
+  <div class="facility-room-admin container-fluid p-2">
     <div class="container mt-5">
       <div class="row align-items-center mb-5">
         <div class="col-md-6">
@@ -441,6 +441,13 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.facility-room-admin {
+  background-image: url("@/assets/img/bg_mpti.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+}
 .text-primary-dark {
   color: #11162c;
   letter-spacing: 1px;
